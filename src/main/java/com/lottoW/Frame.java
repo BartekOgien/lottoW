@@ -8,7 +8,7 @@ public class Frame {
 
     public Frame() {
         lottoFrame = new JFrame("Lotto");
-        lottoFrame.setSize(400, 540);
+        lottoFrame.setSize(600, 540);
         lottoFrame.setLayout(null);
         lottoFrame.setVisible(true);
     }
