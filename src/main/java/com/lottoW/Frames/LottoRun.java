@@ -1,17 +1,20 @@
-package com.lottoW;
+package com.lottoW.Frames;
 
 import com.lottoW.Generators.ButtonGenerator;
 import com.lottoW.Generators.LabelGenerator;
+import com.lottoW.Comparators.NumberComparator;
+import com.lottoW.Generators.NumberGenerator;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
-public class LottoRun implements ActionListener {
+public class LottoRun extends Component implements ActionListener {
     private JFrame lottoFrame;
     private JLabel labelYourNumbers;
-    private JLabel labelGeneratedNumbers;
     private JLabel labelText;
     private JLabel labelchoosenNumber;
     private Set<Integer> choosenNumber = new HashSet<>();
@@ -57,6 +60,21 @@ public class LottoRun implements ActionListener {
             if (e.getSource() == resetNumbersButton) {
                 choosenNumber.clear();
                 labelchoosenNumber.setText("");
+            }
+            if (e.getSource() == generateNumbersButton) {
+
+                    NumberGenerator numberGenerator = new NumberGenerator();
+                    List<Integer> generatedNumber = numberGenerator.generateDrawNumbers();
+                    NumberComparator numberComparator = new NumberComparator();
+                    long result = numberComparator.compareNumbers(generatedNumber, choosenNumber);
+
+                try {
+                    JOptionPane.showMessageDialog(lottoFrame, "Draw numbers are:  " + generatedNumber + "\n" +
+                            "You catch " + result + " from 6 \n" +
+                            numberComparator.howManyWon(result));
+                } catch (IllegalComponentStateException ei) {
+
+                }
             }
             if (choosenNumber.size() < 6) {
                 JButton jbutton = (JButton) e.getSource();
